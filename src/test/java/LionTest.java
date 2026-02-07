@@ -25,6 +25,15 @@ public class LionTest {
         Lion lion = new Lion("Самец", feline);
 
         assertEquals(3, lion.getKittens());
+    }
+
+    @Test
+    public void getKittensCallsFelineGetKittensOnce() throws Exception {
+        when(feline.getKittens()).thenReturn(3);
+
+        Lion lion = new Lion("Самец", feline);
+        lion.getKittens();
+
         verify(feline, times(1)).getKittens();
     }
 
@@ -36,6 +45,16 @@ public class LionTest {
         Lion lion = new Lion("Самка", feline);
 
         assertEquals(expectedFood, lion.getFood());
+    }
+
+    @Test
+    public void getFoodCallsFelineGetFoodOnce() throws Exception {
+        List<String> expectedFood = Arrays.asList("Животные", "Птицы", "Рыба");
+        when(feline.getFood("Хищник")).thenReturn(expectedFood);
+
+        Lion lion = new Lion("Самка", feline);
+        lion.getFood();
+
         verify(feline, times(1)).getFood("Хищник");
     }
 
